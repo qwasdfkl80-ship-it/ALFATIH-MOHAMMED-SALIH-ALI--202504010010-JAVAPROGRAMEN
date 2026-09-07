@@ -1,0 +1,56 @@
+WEEK 5 - STUDENT INFORMATION SYSTEM
+Encapsulation questions
+
+Name       : Alfatih Mohammed Salih Ali
+Student ID : 202504010010
+
+
+1. Why are the variables declared as private?
+
+They are declared private so that no other class can reach them directly.
+Once studentID, name, cgpa and programme are private, the only code that can
+touch them is the code inside the Student class itself. This is what the
+scenario asked for: the university wants the student information stored
+securely, so a student must not be able to open the object and change their
+own CGPA. Making the fields private puts the Student class in control of its
+own data instead of leaving it open to the whole program.
+
+
+2. What happens if the variables are declared public?
+
+If they are public, any class anywhere in the program can read and overwrite
+them directly, for example:
+
+        s1.cgpa = 4.0;
+
+There is no check and no way to stop it. Three problems follow from this:
+
+  - Invalid data can get in. Nothing prevents a CGPA of 9.9 or -3, even though
+    a CGPA can only be between 0.00 and 4.00.
+  - The class loses control of itself. The Student class can no longer promise
+    that the data it holds is correct, because anyone can change it.
+  - Maintenance becomes hard. If the field name or type is changed later, every
+    line in the whole program that used it directly breaks.
+
+In short, public fields mean the data is no longer protected.
+
+
+3. Why do we use getters and setters?
+
+Getters and setters give a controlled door into the object instead of leaving
+the wall open. The field stays private, and the class decides what is allowed
+through:
+
+  - The setter can validate before it stores anything. For example setCGPA()
+    could reject any value outside 0.00 to 4.00, so bad data never gets in.
+  - The getter can return the value in a chosen format, or return it as
+    read-only, so a value can be published without being made editable.
+  - A field can be made read-only simply by writing a getter and no setter,
+    which is useful for something like studentID that should never change
+    after it is assigned.
+  - The internal code can change later without breaking anything outside,
+    because the rest of the program only ever calls getCGPA() and setCGPA(),
+    not the field itself.
+
+This is what encapsulation means in practice: the data is hidden, and access
+to it goes through methods that the class controls.
